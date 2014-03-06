@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>QR code</title>
+</head>
+<body>
+<div>
+<input type="text" id="qr-val" style="width: 50%; min-width: 400px; border-radius: 2px;">
+</div>
+<canvas id="qr-code"></canvas>
+<script src="/s/qr.min.js"></script>
+<script>
+(function(doc) {
+var c = doc.getElementById('qr-code');
+var i = doc.getElementById('qr-val');
+
+var url = location.href;
+var val = url.replace(/^(https?:\/\/.+?)\.qr\.ngx\.so\//, '$1/');
+
+i.value = val;
+make(val);
+
+i.onkeyup = i.onchange = function() {
+    make(i.value);
+};
+
+function make(val) {
+    qr.canvas({
+        canvas: c,
+        value: val
+    });
+}
+})(document);
+</script>
+
+<hr>
+<div>
+Bookmark link: <a href="javascript:void(function(l,d){l.href=l.href.replace(/^https?:\/\/([^\/]+)/,'http://$1.'+d);})(location,'qr.ngx.so');">~qr</a> (Drag this to toolbar to use)
+</div>
+</body>
+</html>
